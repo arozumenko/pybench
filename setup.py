@@ -5,7 +5,7 @@ INSTALL_REQUIREMENTS = [
     'argparse'
 ]
 
-VERSION = '1.0.0b'
+VERSION = '1.0.0'
 
 setup(name='webbench',
       version=VERSION,
