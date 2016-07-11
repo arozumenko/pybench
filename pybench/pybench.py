@@ -116,6 +116,7 @@ def create_connction(host, port):
 
 
 def main():
+    """Mein methos of pybench executor"""
     parser = argparse.ArgumentParser(description='pyBench is an alternative to ab in python')
 
     parser.add_argument('-n', dest='requests', type=int,
