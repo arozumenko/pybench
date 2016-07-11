@@ -21,5 +21,5 @@ setup(name='pybench',
           'console_scripts': ['pybench=pybench.pybench:main'],
       },
       author_email='artem.rozumenko@gmail.com',
-      url='http://none',
+      url='https://github.com/arozumenko/pybench',
       license='MIT')

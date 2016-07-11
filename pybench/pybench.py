@@ -38,13 +38,32 @@ def bench_wrapper(kwargs):
     """
     return bench(**kwargs)
 
+
 def communicate(s, msg):
+    """
+    send message to socket and receive response
+    :param s Socket Connection: - open socket
+    :param msg: message
+    :return str - response data
+    """
     s.send(msg)
     return s.recv(1024)
 
 
 def bench(host, port, uri, method, headers, body, verbocity, http_version):
-
+    """
+    The benchmark method
+    :param host str: - host to run tests agains
+    :param port int: - port to connect
+    :param uri str: - URI to send in message
+    :param method str: - http method
+    :param headers str: - formatted headers for message
+    :param body str: - body of message
+    :param verbocity int [0-1]: - print extended output option
+    :param http_version str: - represetation of http protocol
+    :return
+        [list] results of benchmark:
+    """
     t1 = time.time()
     s = create_connction(host, port)
     t2 = time.time()
@@ -79,6 +98,12 @@ def bench(host, port, uri, method, headers, body, verbocity, http_version):
 
 
 def create_connction(host, port):
+    """
+    Create connection to socket host/port
+    :param host srt: - host to connect
+    :param port int: - port to connect
+    :return socket: - open connection
+    """
     ai_list = socket.getaddrinfo(host, port, socket.AF_UNSPEC,
                                  socket.SOCK_STREAM)
     for (family, socktype, proto, canon, sockaddr) in ai_list:
