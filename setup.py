@@ -7,10 +7,10 @@ INSTALL_REQUIREMENTS = [
 
 VERSION = '1.0.0b'
 
-setup(name='webb',
+setup(name='webbench',
       version=VERSION,
       packages=[
-          'webb',
+          'webbench',
       ],
       classifiers=[
           'Development Status :: 4 - Beta',
@@ -30,7 +30,7 @@ setup(name='webb',
       description='lightweight HTTP/HTTPS benchmark tool written on Python',
       author='Artem Rozumenko',
       entry_points={
-          'console_scripts': ['webb=webb.webb:main'],
+          'console_scripts': ['webbench=webbench.webbench:main'],
       },
       author_email='artem.rozumenko@gmail.com',
       url='https://github.com/arozumenko/pybench',
