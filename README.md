@@ -1,9 +1,19 @@
 # pybench
+
 lightweight HTTP/HTTPS benchmark tool written on Python
+
 it is an alternative to ab in python. Created to be able to see every connection Connection-Time :) 
+
 helps a lot in debugging of performance issues.
 
-positional arguments:
+
+```
+  usage: pybench [-h] [-n REQUESTS] [-c CONCURRENCY] [-d STRBODY] [-p POSTFILE]
+               [-u PUTFILE] [-v VERBOSITY] [-H HEADER] [-e CSV] [-m METHOD]
+               [-Z CIPHERSUITE] [-t HTTP_VERSION] [-f PROTOCOL]
+               URL
+               
+  positional arguments:
   URL              URL of request
 
 optional arguments:
@@ -21,3 +31,4 @@ optional arguments:
   -Z CIPHERSUITE   Specify SSL/TLS cipher suite (See openssl ciphers)
   -t HTTP_VERSION  Speofy HTTP versions (1.0, 1.1)
   -f PROTOCOL      Specify SSL/TLS protocol (SSLv23, SSLv2, SSLv3, TLSv1)
+```
