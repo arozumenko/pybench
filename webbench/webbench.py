@@ -50,7 +50,7 @@ def communicate(s, msg):
     return s.recv(1024)
 
 
-def bench(host, port, uri, method, headers, body, verbocity, http_version):
+def bench(host, port, uri, method, headers, body, verbocity, http_version, protocol):
     """
     The benchmark method
     :param host str: - host to run tests agains
@@ -65,7 +65,7 @@ def bench(host, port, uri, method, headers, body, verbocity, http_version):
         [list] results of benchmark:
     """
     t1 = time.time()
-    s = create_connction(host, port)
+    s = create_connction(host, port, protocol)
     t2 = time.time()
 
     msg = "%s %s HTTP/%s\r\n" % (method, uri, http_version)
@@ -97,7 +97,7 @@ def bench(host, port, uri, method, headers, body, verbocity, http_version):
     return res
 
 
-def create_connction(host, port):
+def create_connction(host, port, protocol):
     """
     Create connection to socket host/port
     :param host srt: - host to connect
@@ -110,7 +110,7 @@ def create_connction(host, port):
         sock = socket.socket(family, socktype)
         # WRAP SOCKET
         if port == 443:
-            sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_SSLv23)
+            sock = ssl.wrap_socket(sock, ssl_version=protocol)
         sock.connect(sockaddr)
         return sock
 
@@ -143,7 +143,7 @@ def main():
     parser.add_argument('-t', dest='http_version', default='1.1',
                         help='Speofy HTTP versions (1.0, 1.1)')
     parser.add_argument('-f', dest='protocol', default='SSLv23',
-                        help='Specify SSL/TLS protocol (SSLv23, SSLv2, SSLv3, TLSv1)')
+                        help='Specify SSL/TLS protocol (SSLv23, SSLv2, SSLv3, TLSv1, TLSv1_1, TLSv1_2)')
     parser.add_argument('url', metavar="URL", type=str, help='URL of request')
 
     # args = parser.parse_args(["-c", "1", "-n", "1", "-v", "1", "-H",
@@ -174,6 +174,16 @@ def main():
     if args.requests < args.concurrency:
         print "Requests should be bigger then concurrency"
         sys.exit(1)
+
+    protocols = {
+        'SSLv23': ssl.PROTOCOL_SSLv23,
+        'SSLv2': ssl.PROTOCOL_SSLv2,
+        'SSLv3': ssl.PROTOCOL_SSLv3,
+        'TLSv1': ssl.PROTOCOL_TLSv1,
+        'TLSv1_1': ssl.PROTOCOL_TLSv1_1,
+        'TLSv1_2': ssl.PROTOCOL_TLSv1_2,
+    }
+
     arguments = []
     method = args.method
     port = 443 if 'https' in args.url else 80
@@ -195,7 +205,7 @@ def main():
         with open(args.putfile, 'r') as f:
             body = f.read().strip()
         method = 'PUT'
-
+    protocol = ssl.PROTOCOL_SSLv23 if args.protocol not in protocols else protocols[args.protocol]
     print "Starting benchmark for:"
     print "%s %s %s" % (method, args.url, args.http_version)
     if args.verbosity:
@@ -209,7 +219,8 @@ def main():
     for each in range(args.requests):
         arguments.append(dict(host=host, port=port, uri=uri, headers=headers,
                               verbocity=True if args.verbosity else False,
-                              body=body, method=method, http_version=args.http_version))
+                              body=body, method=method, http_version=args.http_version,
+                              protocol=protocol))
     print "Staring test ... "
     result = []
     start = time.time()
