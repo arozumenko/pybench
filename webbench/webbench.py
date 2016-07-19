@@ -143,7 +143,7 @@ def main():
     parser.add_argument('-t', dest='http_version', default='1.1',
                         help='Speofy HTTP versions (1.0, 1.1)')
     parser.add_argument('-f', dest='protocol', default='SSLv23',
-                        help='Specify SSL/TLS protocol (SSLv23, SSLv2, SSLv3, TLSv1, TLSv1_1, TLSv1_2)')
+                        help='Specify SSL/TLS protocol (SSLv23, SSLv2, SSLv3, TLSv1)')
     parser.add_argument('url', metavar="URL", type=str, help='URL of request')
 
     # args = parser.parse_args(["-c", "1", "-n", "1", "-v", "1", "-H",
@@ -179,9 +179,7 @@ def main():
         'SSLv23': ssl.PROTOCOL_SSLv23,
         'SSLv2': ssl.PROTOCOL_SSLv2,
         'SSLv3': ssl.PROTOCOL_SSLv3,
-        'TLSv1': ssl.PROTOCOL_TLSv1,
-        'TLSv1_1': ssl.PROTOCOL_TLSv1_1,
-        'TLSv1_2': ssl.PROTOCOL_TLSv1_2,
+        'TLSv1': ssl.PROTOCOL_TLSv1
     }
 
     arguments = []
